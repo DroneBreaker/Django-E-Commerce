@@ -61,7 +61,7 @@ def signup(request):
 
 
             form = CreateUserForm(request.POST)
-            if form.is_valid:
+            if form.is_valid():
                 form.save()
                 username = form.cleaned_data.get('username')
                 email = form.cleaned_data.get('email')
@@ -69,7 +69,6 @@ def signup(request):
                 password = form.cleaned_data.get('password2')
                 user = authenticate(username=username, password=password)
                 user.is_active = False
-                user.save()
 
                 email_subject = 'Activate your account'
                 email_body = 'This is Drone'
@@ -82,7 +81,7 @@ def signup(request):
                     # reply_to=['another@example.com'],
                     # headers={'Message-ID': 'foo'}
                 )
-                email.send(fail_silently=False)
+                email.send(fail_silently=True)
                 messages.success(request, "Account was created for " + username)
                 login(request, user)
                 return redirect("signin.html")
@@ -90,4 +89,4 @@ def signup(request):
                 return render(request, 'signup.html', {'form':form})
         else:
             form = CreateUserForm()
-            return render(request, 'signup.html', {'form':form})
+    return render(request, 'signup.html', {'form':form})
