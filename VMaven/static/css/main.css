@@ -2,12 +2,12 @@ html {
     margin: 0px;
     padding: 0px;
 }
-body {
+/* body { */
     /* background-color: darkslategray; */
     /* background-color: dimgray; */
     /* background: linear-gradient(darkslategray, darkgray); */
-    background: linear-gradient(to right, darkslategray 0%, darkslategray 50%, dimgray 50%, dimgray 100%);
-}
+    /* background: linear-gradient(to right, darkslategray 0%, darkslategray 50%, dimgray 50%, dimgray 100%); */
+ /* } */
 #hero {
     margin: 250px 350px;
 }

@@ -21,7 +21,7 @@ from django.urls import reverse
 class Product(models.Model):
     name = models.CharField(max_length=100)
     price = models.DecimalField(decimal_places=2, max_digits=6)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='media/')
     discount_price = models.DecimalField(decimal_places=2, max_digits=6, blank=True, null=True)
     # category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
     # label = models.CharField(choices=LABEL_CHOICES, max_length=1)
