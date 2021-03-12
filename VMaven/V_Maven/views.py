@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, send_mail
 
 # Create your views here.
 def home(request):
@@ -20,7 +20,37 @@ def about(request):
     return render(request, 'about.html')
 
 def contact(request):
-    return render(request, 'contact.html')
+    if request.method == 'POST':
+        contact_first_name = request.POST['contact_first_name']
+        contact_last_name = request.POST['contact_last_name']
+        contact_email = request.POST['contact_email']
+        contact_subject = request.POST['contact_subject']
+        contact_message = request.POST['contact_message'] 
+
+        send_mail(
+            contact_first_name,
+            contact_message,
+            contact_email,
+            ['brownierz01@gmail', 'evildrone@icloud.com']
+            # ['bcc@example.com'],
+            # reply_to=['another@example.com'],
+            # headers={'Message-ID': 'foo'}
+                )
+
+        return render(request, 'delivered.html', {'contact_first_name': contact_first_name})
+    else:
+        return render(request, 'contact.html', {})
+
+def delivered(request):
+    if request.method == 'POST':
+        contact_first_name = request.POST.get('contact_first_name')
+        contact_last_name = request.POST.get('contact_last_name')
+        contact_email = request.POST.get('contact_email')
+        contact_subject = request.POST.get('contact_subject')
+        contact_message = request.POST.get('contact_message')
+        return render(request, 'delivered.html', {'contact_first_name': contact_first_name})
+    else:
+        return render(request, 'delivered.html', {})
 
 def signin(request):
     if request.user.is_authenticated:
@@ -39,7 +69,7 @@ def signin(request):
                 messages.info(request, "Please enter your username and password")
                 return render(request, 'signin.html')
         else:
-            return render(request, 'signin.html')
+            return render(request, 'signin.html', {})
 
 def signout(request):
     logout(request)
@@ -68,7 +98,7 @@ def signup(request):
                 password = form.cleaned_data.get('password1')
                 password = form.cleaned_data.get('password2')
                 user = authenticate(username=username, password=password)
-                user.is_active = False
+                user.is_active = True
 
                 email_subject = 'Activate your account'
                 email_body = 'This is Drone'

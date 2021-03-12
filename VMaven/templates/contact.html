@@ -7,16 +7,16 @@
 {% block content %}
     <div class="container center" id="about">
         <h1>CONTACT</h1>
-    {% comment %} <p>{% lorem 2 %} </p> {% endcomment %}
-        <form method="POST" action="">
+        <p>{% lorem 2 %} </p>
+        <form method="POST" action="delivered.html">
             {% csrf_token %}
             <br>
             <div class="row">
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="First name" aria-label="First name">
+                    <input type="text" class="form-control" id="contact_first_name" placeholder="First name" name="contact_first_name" aria-label="First name">
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+                    <input type="text" class="form-control" id="contact_last_name" placeholder="Last name" name="contact_last_name" aria-label="Last name">
                 </div>
             </div>
 
@@ -24,15 +24,16 @@
 
             <div class="row">
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Email" aria-label="Email">
+                    <input type="text" class="form-control" id="contact_email" placeholder="Email" name="contact_email" aria-label="Email">
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Subject" aria-label="Subject">
+                    <input type="text" class="form-control" id="contact_subject" placeholder="Subject" name="contact_subject" aria-label="Subject">
                 </div>
             </div>
             <br>
-            <textarea class="form-control" aria-label="With textarea"></textarea>
+            <textarea class="form-control" aria-label="contact_message" placeholder="Enter Your Message" name="contact_message"></textarea>
             <br>
             <input type="submit" class="btn btn-primary center" value="Submit">
         </form>
+    </div>
 {% endblock %}

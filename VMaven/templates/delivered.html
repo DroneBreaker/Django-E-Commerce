@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Message Delivery</title>
+{% endblock  %}
+
+{% block content %}
+    {% if contact_first_name %}
+        <br><br><br>
+        <center>
+            <h2>Thanks {{ contact_first_name }}</h2>
+            <p>We received your email and will respond shortly</p>
+        </center>
+    {% else %}
+        <br><br><br>
+        <center>
+            <h2>Message Error</h2>
+            <p>Oops, seems like your message didn't delivery. Kindly resend</p>
+        </center>
+    {% endif %}
+{% endblock  %}
