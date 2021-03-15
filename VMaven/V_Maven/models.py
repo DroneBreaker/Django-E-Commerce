@@ -27,8 +27,8 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-    #def get_absolute_url(self):
-    #     return reverse('store.html', kwargs={'slug':self.slug})
+    def get_absolute_url(self):
+        return reverse('V_Maven:category_list', args=[self.slug])
 
 
 class Product(models.Model):
@@ -55,8 +55,8 @@ class Product(models.Model):
         verbose_name_plural = 'Products'
         ordering = ('-created',)
 
-    # def get_absolute_url(self):
-    #     return reverse('store.html', kwargs={'slug':self.slug})
+    def get_absolute_url(self):
+        return reverse('V_Maven:product_detail', args=[self.slug])
 
 
 class OrderItem(models.Model):

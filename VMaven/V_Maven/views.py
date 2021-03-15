@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Product
+from .models import Category, Product
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
@@ -14,7 +14,21 @@ def home(request):
 
 def store(request):
     products = Product.objects.all()
-    return render(request, 'store.html', {'products':products})
+    return render(request, 'store.html', {'products': products})
+
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug, in_stock=True)
+    return render(request, 'products/detail.html', {'product': product})
+
+def category_list(request, category_slug):
+    category = get_object_or_404(Category, slug=category_slug)
+    products = Product.objects.filter(category=category)
+    return render(request, 'products/category.html', {'category': category, 'products': products})
+
+def categories(request):
+    return {
+        'categories': Category.objects.all()
+    }
 
 def about(request):
     return render(request, 'about.html')
