@@ -9,13 +9,13 @@
         <div class="pb-3 h5">Everything Fashion</div>
         <div class="row">
             {% for product in products %}
-                <div class="col-sm-3">
+                <div class="col-md-4">
                     <div class="card">
                         <img class="img-fluid" src="{{ product.image.url }}">
                         <h5><a class="card-title text-dark text-decoration-none center" href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="card-text">Price - {{ product.price }}</p>
-                        <a href="#" class="btn btn-primary">Buy Now</a>
+                        <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Buy Now</a>
                     </div>
                 </div>
             {% endfor %}

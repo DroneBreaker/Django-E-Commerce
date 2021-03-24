@@ -15,7 +15,7 @@
                         <h5><a class="card-title text-dark text-decoration-none center" href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
                         <p class="card-text">{{ product.description }}</p>
                         <p class="card-text">Price - {{ product.price }}</p>
-                        <a href="#" class="btn btn-primary">Buy Now</a>
+                        <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Buy Now</a>
                     </div>
                 </div>
             {% endfor %}
