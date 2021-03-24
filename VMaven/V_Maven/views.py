@@ -9,29 +9,37 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage, send_mail
 
 # Create your views here.
+
+
 def home(request):
     return render(request, 'index.html')
+
 
 def store(request):
     products = Product.objects.all()
     return render(request, 'store.html', {'products': products})
 
+
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug, in_stock=True)
     return render(request, 'products/detail.html', {'product': product})
+
 
 def category_list(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
     products = Product.objects.filter(category=category)
     return render(request, 'products/category.html', {'category': category, 'products': products})
 
+
 def categories(request):
     return {
         'categories': Category.objects.all()
     }
 
+
 def about(request):
     return render(request, 'about.html')
+
 
 def contact(request):
     if request.method == 'POST':
@@ -39,7 +47,7 @@ def contact(request):
         contact_last_name = request.POST['contact_last_name']
         contact_email = request.POST['contact_email']
         contact_subject = request.POST['contact_subject']
-        contact_message = request.POST['contact_message'] 
+        contact_message = request.POST['contact_message']
 
         send_mail(
             contact_first_name,
@@ -49,22 +57,20 @@ def contact(request):
             # ['bcc@example.com'],
             # reply_to=['another@example.com'],
             # headers={'Message-ID': 'foo'}
-                )
+        )
 
         return render(request, 'delivered.html', {'contact_first_name': contact_first_name})
     else:
         return render(request, 'contact.html', {})
 
+
 def delivered(request):
     if request.method == 'POST':
         contact_first_name = request.POST.get('contact_first_name')
-        contact_last_name = request.POST.get('contact_last_name')
-        contact_email = request.POST.get('contact_email')
-        contact_subject = request.POST.get('contact_subject')
-        contact_message = request.POST.get('contact_message')
         return render(request, 'delivered.html', {'contact_first_name': contact_first_name})
     else:
         return render(request, 'delivered.html', {})
+
 
 def signin(request):
     if request.user.is_authenticated:
@@ -80,10 +86,12 @@ def signin(request):
                 login(request, user)
                 return redirect("store.html")
             else:
-                messages.info(request, "Please enter your username and password")
+                messages.info(
+                    request, "Please enter your username and password")
                 return render(request, 'signin.html')
         else:
             return render(request, 'signin.html', {})
+
 
 def signout(request):
     logout(request)
@@ -102,7 +110,6 @@ def signup(request):
             email = request.POST.get('email')
             password = request.POST.get('password1')
             password = request.POST.get('password2')
-
 
             form = CreateUserForm(request.POST)
             if form.is_valid():
@@ -126,11 +133,12 @@ def signup(request):
                     # headers={'Message-ID': 'foo'}
                 )
                 email.send(fail_silently=True)
-                messages.success(request, "Account was created for " + username)
+                messages.success(
+                    request, "Account was created for " + username)
                 login(request, user)
                 return redirect("signin.html")
             else:
-                return render(request, 'signup.html', {'form':form})
+                return render(request, 'signup.html', {'form': form})
         else:
             form = CreateUserForm()
-    return render(request, 'signup.html', {'form':form})
+    return render(request, 'signup.html', {'form': form})

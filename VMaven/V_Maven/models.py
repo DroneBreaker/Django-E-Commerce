@@ -32,14 +32,17 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='product', on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        Category, related_name='product', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     price = models.DecimalField(decimal_places=2, max_digits=6)
-    image = models.ImageField(upload_to='images/', blank=False)
-    discount_price = models.DecimalField(decimal_places=2, max_digits=6, blank=True, null=True)
+    image = models.ImageField(upload_to='images/', blank=False)  # default
+    discount_price = models.DecimalField(
+        decimal_places=2, max_digits=6, blank=True, null=True)
     # category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
     # label = models.CharField(choices=LABEL_CHOICES, max_length=1)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='product_creator')
+    created_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='product_creator')
     slug = models.SlugField()
     description = models.TextField()
     quantity = models.IntegerField(default=1)
